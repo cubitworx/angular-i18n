@@ -6,8 +6,8 @@ import * as moment from 'moment';
 import { I18nFormats } from './common';
 
 interface I18nServiceOptions {
-	formats: I18nFormats;
-	locale: string;
+	formats?: I18nFormats;
+	locale?: string;
 }
 
 // TODO Must make this reactive like user.service
@@ -34,8 +34,8 @@ export class I18nService {
 		return this._options.formats[name];
 	}
 
-	public setOptions(options: I18nServiceOptions) {
-		this._options = options;
+	public setOptions(options: I18nServiceOptions): void {
+		_.merge(this._options, options);
 	}
 
 	public valueToDate(value: any, format: string = 'shortDate'): Date {
