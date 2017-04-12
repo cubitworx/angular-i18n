@@ -25,7 +25,13 @@ describe('I18nService non-locale specific unit tests', () => {
 
 describe('I18nService default locale unit tests', () => {
 
-  let service: I18nService;
+  let
+	service: I18nService,
+	dateObj = new Date(2019,0,22,12,34,56),
+	timestampString = '01/22/2019 12:34:56',
+	dateString = '01/22/2019',
+	dateTimeString = '01/22/2019 12:34 PM',
+	dateTimeObj = { year: 2019, month: 0, date: 22, hours: 12, minutes: 34, seconds: 56 };
 
   beforeEach(() => {
 		service = new I18nService();
@@ -37,45 +43,39 @@ describe('I18nService default locale unit tests', () => {
 
   it('#valueToDate should return date', () => {
 		// String
-    expect( extractDate( service.valueToDate('01/22/2019 12:34:56', 'shortDate') ) ).toBe({
-			year: 2019, month: 0, date: 22, hours: 0, minutes: 0, seconds: 0,
-		});
-    expect( extractDate( service.valueToDate('01/22/2019 12:34:56', 'shortDateTime') ) ).toBe({
-			year: 2019, month: 0, date: 22, hours: 12, minutes: 34, seconds: 56,
-		});
+    expect( extractDate( service.valueToDate( dateString, 'shortDate' ) ) ).toEqual( dateTimeObj );
+    expect( extractDate( service.valueToDate( timestampString, 'shortDateTime' ) ) ).toEqual( dateTimeObj );
 		// Moment instance
-    expect( extractDate( service.valueToDate( moment( '01/22/2019', service.format('shortDate') ), 'shortDate') ) ).toBe({
-			year: 2019, month: 0, date: 22, hours: 0, minutes: 0, seconds: 0,
-		});
-    expect( extractDate( service.valueToDate( moment( '01/22/2019 12:34', service.format('shortDateTime') ), 'shortDateTime') ) ).toBe({
-			year: 2019, month: 0, date: 22, hours: 12, minutes: 34, seconds: 56,
-		});
+    expect( extractDate( service.valueToDate( moment( dateString, service.format('shortDate') ), 'shortDate') ) ).toEqual( dateTimeObj );
+    expect( extractDate( service.valueToDate( moment( dateTimeString, service.format('shortDateTime') ), 'shortDateTime') ) ).toEqual( dateTimeObj );
 		// Date instance
-    expect( extractDate( service.valueToDate( new Date(2019,0,22,12,34,56), 'shortDate') ) ).toBe({
-			year: 2019, month: 0, date: 22, hours: 0, minutes: 0, seconds: 0,
-		});
-    expect( extractDate( service.valueToDate( new Date(2019,0,22,12,34,56), 'shortDateTime') ) ).toBe({
-			year: 2019, month: 0, date: 22, hours: 12, minutes: 34, seconds: 56,
-		});
+    expect( extractDate( service.valueToDate( dateObj, 'shortDate') ) ).toEqual( dateTimeObj );
+    expect( extractDate( service.valueToDate( dateObj, 'shortDateTime') ) ).toEqual( dateTimeObj );
   });
 
   it('#valueToDateString should return date string', () => {
 		// String
-    expect( service.valueToDateString('01/22/2019 12:34:56', 'shortDate') ).toBe( '01/22/2019' );
-    expect( service.valueToDateString('01/22/2019 12:34:56', 'shortDateTime') ).toBe( '01/22/2019 12:34' );
+    expect( service.valueToDateString( dateString, 'shortDate' ) ).toBe( dateString );
+    expect( service.valueToDateString( timestampString, 'shortDateTime' ) ).toBe( dateTimeString );
 		// Moment instance
-    expect( service.valueToDateString( moment( '01/22/2019', service.format('shortDate') ), 'shortDate') ).toBe( '01/22/2019' );
-    expect( service.valueToDateString( moment( '01/22/2019 12:34', service.format('shortDateTime') ), 'shortDateTime') ).toBe( '01/22/2019 12:34' );
+    expect( service.valueToDateString( moment( dateString, service.format('shortDate') ), 'shortDate') ).toBe( dateString );
+    expect( service.valueToDateString( moment( dateTimeString, service.format('shortDateTime') ), 'shortDateTime') ).toBe( dateTimeString );
 		// Date instance
-    expect( service.valueToDateString( new Date(2019,0,22,12,34,56), 'shortDate') ).toBe( '01/22/2019' );
-    expect( service.valueToDateString( new Date(2019,0,22,12,34,56), 'shortDateTime') ).toBe( '01/22/2019 12:34' );
+    expect( service.valueToDateString( dateObj, 'shortDate') ).toBe( dateString );
+    expect( service.valueToDateString( dateObj, 'shortDateTime') ).toBe( dateTimeString );
   });
 
 });
 
 describe('I18nService unit tests with `de` locale', () => {
 
-  let service: I18nService;
+  let
+	service: I18nService,
+	dateObj = new Date(2019,0,22,12,34,56),
+	timestampString = '22.01.2019 12:34:56',
+	dateString = '22.01.2019',
+	dateTimeString = '22.01.2019 12:34',
+	dateTimeObj = { year: 2019, month: 0, date: 22, hours: 12, minutes: 34, seconds: 56 };
 
   beforeEach(() => {
 		service = new I18nService();
@@ -88,49 +88,37 @@ describe('I18nService unit tests with `de` locale', () => {
 
   it('#valueToDate should return date', () => {
 		// String
-    expect( extractDate( service.valueToDate('22.01.2019 12:34:56', 'shortDate') ) ).toBe({
-			year: 2019, month: 0, date: 22, hours: 0, minutes: 0, seconds: 0,
-		});
-    expect( extractDate( service.valueToDate('22.01.2019 12:34:56', 'shortDateTime') ) ).toBe({
-			year: 2019, month: 0, date: 22, hours: 12, minutes: 34, seconds: 56,
-		});
+    expect( extractDate( service.valueToDate( dateString, 'shortDate' ) ) ).toEqual( dateTimeObj );
+    expect( extractDate( service.valueToDate( timestampString, 'shortDateTime' ) ) ).toEqual( dateTimeObj );
 		// Moment instance
-    expect( extractDate( service.valueToDate( moment( '22.01.2019', service.format('shortDate') ), 'shortDate') ) ).toBe({
-			year: 2019, month: 0, date: 22, hours: 0, minutes: 0, seconds: 0,
-		});
-    expect( extractDate( service.valueToDate( moment( '22.01.2019 12:34', service.format('shortDateTime') ), 'shortDateTime') ) ).toBe({
-			year: 2019, month: 0, date: 22, hours: 12, minutes: 34, seconds: 56,
-		});
+    expect( extractDate( service.valueToDate( moment( dateString, service.format('shortDate') ), 'shortDate') ) ).toEqual( dateTimeObj );
+    expect( extractDate( service.valueToDate( moment( dateTimeString, service.format('shortDateTime') ), 'shortDateTime') ) ).toEqual( dateTimeObj );
 		// Date instance
-    expect( extractDate( service.valueToDate( new Date(2019,0,22,12,34,56), 'shortDate') ) ).toBe({
-			year: 2019, month: 0, date: 22, hours: 0, minutes: 0, seconds: 0,
-		});
-    expect( extractDate( service.valueToDate( new Date(2019,0,22,12,34,56), 'shortDateTime') ) ).toBe({
-			year: 2019, month: 0, date: 22, hours: 12, minutes: 34, seconds: 56,
-		});
+    expect( extractDate( service.valueToDate( dateObj, 'shortDate') ) ).toEqual( dateTimeObj );
+    expect( extractDate( service.valueToDate( dateObj, 'shortDateTime') ) ).toEqual( dateTimeObj );
   });
 
   it('#valueToDateString should return date string', () => {
 		// String
-    expect( service.valueToDateString('22.01.2019 12:34:56', 'shortDate') ).toBe( '22.01.2019' );
-    expect( service.valueToDateString('22.01.2019 12:34:56', 'shortDateTime') ).toBe( '22.01.2019 12:34' );
+    expect( service.valueToDateString( dateString, 'shortDate' ) ).toBe( dateString );
+    expect( service.valueToDateString( timestampString, 'shortDateTime' ) ).toBe( dateTimeString );
 		// Moment instance
-    expect( service.valueToDateString( moment( '22.01.2019', service.format('shortDate') ), 'shortDate') ).toBe( '22.01.2019' );
-    expect( service.valueToDateString( moment( '22.01.2019 12:34', service.format('shortDateTime') ), 'shortDateTime') ).toBe( '22.01.2019 12:34' );
+    expect( service.valueToDateString( moment( dateString, service.format('shortDate') ), 'shortDate') ).toBe( dateString );
+    expect( service.valueToDateString( moment( dateTimeString, service.format('shortDateTime') ), 'shortDateTime') ).toBe( dateTimeString );
 		// Date instance
-    expect( service.valueToDateString( new Date(2019,0,22,12,34,56), 'shortDate') ).toBe( '22.01.2019' );
-    expect( service.valueToDateString( new Date(2019,0,22,12,34,56), 'shortDateTime') ).toBe( '22.01.2019 12:34' );
+    expect( service.valueToDateString( dateObj, 'shortDate') ).toBe( dateString );
+    expect( service.valueToDateString( dateObj, 'shortDateTime') ).toBe( dateTimeString );
   });
 
 });
 
 function extractDate(date: Date) {
 	return {
-		year: date.getUTCFullYear(),
-		month: date.getUTCMonth(),
-		date: date.getUTCDate(),
-		hours: date.getUTCHours(),
-		minutes: date.getUTCMinutes(),
-		seconds: date.getUTCSeconds(),
+		year: date.getFullYear(),
+		month: date.getMonth(),
+		date: date.getDate(),
+		hours: date.getHours(),
+		minutes: date.getMinutes(),
+		seconds: date.getSeconds(),
 	};
 }
