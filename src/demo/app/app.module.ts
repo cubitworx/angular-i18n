@@ -3,7 +3,7 @@ import { BrowserModule }  from '@angular/platform-browser';
 
 // Local
 import { AppComponent } from './app.component';
-import { I18nModule } from '../module';
+import { I18nModule } from '../../module';
 
 @NgModule({
 	bootstrap: [ AppComponent ],

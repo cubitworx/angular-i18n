@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 // Local
-import { I18nService }  from '../module/i18n.service';
+import { I18nService }  from '../../module/i18n.service';
 
 @Component({
 	selector: 'app',

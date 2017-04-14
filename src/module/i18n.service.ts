@@ -5,7 +5,7 @@ import * as moment from 'moment';
 // Local
 import { I18nFormats } from './common';
 
-interface I18nServiceOptions {
+export interface I18nServiceOptions {
 	formats?: I18nFormats;
 	locale?: string;
 }
