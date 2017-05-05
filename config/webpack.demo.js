@@ -1,35 +1,92 @@
+var fs  = require('fs');
+var webpack = require('webpack');
 var webpackMerge = require('webpack-merge');
-var commonConfig = require('./webpack.common.js');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
 var helpers = require('./helpers');
+var webpackLib = require('./webpack.lib.js');
 
-module.exports = webpackMerge(commonConfig, {
+const pkg = JSON.parse( fs.readFileSync('./package.json').toString() );
+const METADATA = {
+	title: pkg.name,
+	description: pkg.description,
+	baseUrl: '/',
+	isDevServer: helpers.isWebpackDevServer()
+};
 
-  devtool: 'cheap-module-eval-source-map',
+module.exports = webpackMerge(
+	webpackLib.angularWorkaround,
+	webpackLib.defaultDefinePlugin,
+	webpackLib.imageLoader,
+	webpackLib.resolveTypescript,
+	webpackLib.stylesExtracted,
+	{
 
-  output: {
-    path: helpers.root('dist'),
-    publicPath: 'http://localhost:8080/',
-    filename: '[name].bundle.js',
-    chunkFilename: '[id].chunk.js'
-  },
+		devtool: 'cheap-module-eval-source-map',
 
-  module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        use: [
-          {
-            loader: 'awesome-typescript-loader',
-            options: { configFileName: helpers.root('tsconfig-demo.json') }
-          }, 'angular2-template-loader'
-        ]
-      }
-		]
-	},
+		entry: {
+			'polyfills': './src/demo/polyfills.ts',
+			'vendor.scss': './src/demo/vendor.scss.ts',
+			'app': './src/demo/main.ts'
+		},
 
-  devServer: {
-    historyApiFallback: true,
-    stats: 'minimal'
-  }
+		output: {
+			path: helpers.root('demo'),
+			publicPath: '/',
+			filename: '[name].bundle.js',
+			chunkFilename: '[id].chunk.js'
+		},
 
-});
+		module: {
+			rules: [
+
+				{
+					test: /\.ts$/,
+					use: [ 'awesome-typescript-loader', 'angular2-template-loader' ]
+				},
+
+				{
+					test: /\.html$/,
+					use: 'html-loader',
+					exclude: /index\.html$/
+				}
+
+			]
+		},
+
+		plugins: [
+
+			// Explicit polyfills chunk since they don't need to be imported via code
+			new webpack.optimize.CommonsChunkPlugin({
+				name: 'polyfills',
+				chunks: ['polyfills']
+			}),
+
+			// Implicit common vendor chunk enables tree shaking of the vendor modules
+			new webpack.optimize.CommonsChunkPlugin({
+				name: 'vendor',
+				chunks: ['app'],
+				minChunks: module => /node_modules/.test(module.resource)
+			}),
+
+			// Specify the correct order the scripts will be injected in
+			new webpack.optimize.CommonsChunkPlugin({
+				names: ['polyfills', 'vendor'].reverse()
+			}),
+
+			new HtmlWebpackPlugin({
+				template: 'src/demo/index.html',
+				chunksSortMode: 'dependency',
+				metadata: METADATA,
+				inject: 'body'
+			})
+
+		],
+
+		devServer: {
+			historyApiFallback: true,
+			stats: 'minimal'
+		}
+
+	}
+);
