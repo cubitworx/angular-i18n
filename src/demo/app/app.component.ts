@@ -10,12 +10,19 @@ import { I18nService }  from '../../module/i18n.service';
 })
 export class AppComponent {
 
-	private _date: Date = new Date();
+	protected _date: Date = new Date();
+	protected _locale: string = 'de';
 
 	public constructor(
-		i18nService: I18nService
+		protected _i18nService: I18nService
 	) {
-		i18nService.setOptions({ locale: 'de' });
+		this._i18nService.setOptions({ locale: this._locale });
+	}
+
+	public changeLocale(locale: string) {
+		this._locale = locale;
+		this._i18nService.setOptions({ locale: this._locale });
+		this._date = new Date();
 	}
 
 }

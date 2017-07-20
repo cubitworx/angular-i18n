@@ -10,9 +10,10 @@ var core_1 = require("@angular/core");
 // Local
 var i18n_date_pipe_1 = require("./module/i18n-date.pipe");
 var i18n_service_1 = require("./module/i18n.service");
-var I18nModule = I18nModule_1 = (function () {
+var I18nModule = (function () {
     function I18nModule() {
     }
+    I18nModule_1 = I18nModule;
     I18nModule.forRoot = function () {
         return {
             ngModule: I18nModule_1,
@@ -21,21 +22,21 @@ var I18nModule = I18nModule_1 = (function () {
             ]
         };
     };
+    I18nModule = I18nModule_1 = __decorate([
+        core_1.NgModule({
+            declarations: [
+                i18n_date_pipe_1.I18nDatePipe
+            ],
+            exports: [
+                i18n_date_pipe_1.I18nDatePipe
+            ],
+            providers: [
+                i18n_service_1.I18nService
+            ]
+        })
+    ], I18nModule);
     return I18nModule;
+    var I18nModule_1;
 }());
-I18nModule = I18nModule_1 = __decorate([
-    core_1.NgModule({
-        declarations: [
-            i18n_date_pipe_1.I18nDatePipe
-        ],
-        exports: [
-            i18n_date_pipe_1.I18nDatePipe
-        ],
-        providers: [
-            i18n_service_1.I18nService
-        ]
-    })
-], I18nModule);
 exports.I18nModule = I18nModule;
-var I18nModule_1;
 //# sourceMappingURL=module.js.map

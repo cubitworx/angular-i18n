@@ -1,7 +1,27 @@
-<main>
+<header>
+  <h1 class="project-name">@cubitworx/angular-i18n</h1>
+  <h2 class="project-tagline">Internationalization package for Angular.</h2>
 
-  <h1>I18N Date Pipe</h1>
-	<p>shortDate: {{ _date | i18nDate : 'shortDate' }}</p>
-	<p>shortDate: {{ _date | i18nDate : 'shortDateTime' }}</p>
+  <a class="btn" href="https://github.com/cubitworx/angular-i18n" target="_blank">View on GitHub</a>
+</header>
 
-</main>
+<section class="demo">
+
+	<h3>Demo</h3>
+	<table>
+		<tr>
+			<td>Locale</td>
+			<td>
+				<select id="select-locale" (change)="changeLocale($event.target.value)">
+					<option value="de">German</option>
+					<option value="en-US">English (US)</option>
+					<option value="en-GB">English (GB)</option>
+					<option value="fr">French</option>
+				</select>
+			</td>
+		</tr>
+		<tr><td>shortDate</td><td>{{ _date | i18nDate : 'shortDate' }}</td></tr>
+		<tr><td>shortDateTime</td><td>{{ _date | i18nDate : 'shortDateTime' }}</td></tr>
+	</table>
+
+</section>

@@ -4,11 +4,10 @@
   "license": "MIT",
   "description": "Internationalization package for Angular",
   "main": "./dist",
-  "module": "./src",
-  "types": "./dist",
+  "module": "./dist",
+  "typings": "./dist",
   "scripts": {
 		"build": "rimraf dist && tsc -p tsconfig-dist.json",
-    "commit": "git-cz",
     "htmlhint": "htmlhint ./src/**/*.html -c ./.htmlhintrc",
     "lint": "npm run tslint && npm run htmlhint",
     "prerelease": "npm run lint && npm run build && npm run test",
@@ -40,9 +39,7 @@
     "@types/webpack": "^2.2.8",
     "angular2-template-loader": "^0.6.0",
     "awesome-typescript-loader": "^3.0.8",
-    "commitizen": "^2.8.1",
     "css-loader": "^0.28.0",
-    "cz-conventional-changelog": "^2.0.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "html-loader": "^0.4.5",
     "html-webpack-plugin": "^2.16.1",
@@ -66,10 +63,5 @@
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.1",
     "webpack-merge": "^3.0.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-conventional-changelog"
-    }
   }
 }

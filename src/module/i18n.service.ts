@@ -66,7 +66,16 @@ export class I18nService {
 		if( _.isString( value ) ) {
 
 			try {
-				return moment( value, format );
+				let valueMoment = moment( value, format );
+				if( valueMoment.isValid() )
+					return valueMoment;
+
+				valueMoment = moment( value );
+				if( valueMoment.isValid() )
+					return valueMoment;
+
+				console.error('Invalid date string format for', {value, format});
+				return moment();
 			} catch(exception) {
 				console.error('Invalid date string format for', {value, exception});
 				return moment();

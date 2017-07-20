@@ -19,13 +19,13 @@ var I18nDatePipe = (function () {
     I18nDatePipe.prototype.transform = function (value, format) {
         return this._i18nService.valueToDateString(value, format);
     };
+    I18nDatePipe = __decorate([
+        core_1.Pipe({
+            name: 'i18nDate'
+        }),
+        __metadata("design:paramtypes", [i18n_service_1.I18nService])
+    ], I18nDatePipe);
     return I18nDatePipe;
 }());
-I18nDatePipe = __decorate([
-    core_1.Pipe({
-        name: 'i18nDate'
-    }),
-    __metadata("design:paramtypes", [i18n_service_1.I18nService])
-], I18nDatePipe);
 exports.I18nDatePipe = I18nDatePipe;
 //# sourceMappingURL=i18n-date.pipe.js.map

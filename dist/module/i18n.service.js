@@ -58,7 +58,14 @@ var I18nService = (function () {
         // String
         if (_.isString(value)) {
             try {
-                return moment(value, format);
+                var valueMoment = moment(value, format);
+                if (valueMoment.isValid())
+                    return valueMoment;
+                valueMoment = moment(value);
+                if (valueMoment.isValid())
+                    return valueMoment;
+                console.error('Invalid date string format for', { value: value, format: format });
+                return moment();
             }
             catch (exception) {
                 console.error('Invalid date string format for', { value: value, exception: exception });
@@ -77,10 +84,10 @@ var I18nService = (function () {
         console.error('Unrecognised date value', value);
         return moment();
     };
+    I18nService = __decorate([
+        core_1.Injectable()
+    ], I18nService);
     return I18nService;
 }());
-I18nService = __decorate([
-    core_1.Injectable()
-], I18nService);
 exports.I18nService = I18nService;
 //# sourceMappingURL=i18n.service.js.map
