@@ -1,7 +1,4 @@
-export * from './module/common';
-
-export * from './module/i18n.service';
-
-export * from './module/i18n-date.pipe';
-
-export * from './module';
+export { I18nFormats } from './common';
+export { I18nService, I18nServiceOptions } from './i18n.service';
+export { I18nDatePipe } from './i18n-date.pipe';
+export { I18nModule } from './module';

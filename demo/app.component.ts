@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 // Local
-import { I18nService }  from '../../module/i18n.service';
+import { I18nService }  from '../src';
 
 @Component({
 	selector: 'app',
@@ -11,7 +11,7 @@ import { I18nService }  from '../../module/i18n.service';
 export class AppComponent {
 
 	protected _date: Date = new Date();
-	protected _locale: string = 'de';
+	protected _locale = 'de';
 
 	public constructor(
 		protected _i18nService: I18nService

@@ -38,23 +38,30 @@ export class I18nService {
 		_.merge(this._options, options);
 	}
 
-	public valueToDate(value: any, format: string = 'shortDate'): Date {
+	public toDate(value: any, format = 'shortDate'): Date {
 		// No value
 		if( !value )
 			return new Date();
 
-		return this.valueToMoment( value, format ).toDate();
+		let result = this.toMoment(value, format);
+
+		if(['shortDate'].indexOf(format) !== -1)
+			result.set({hour: 0, minute: 0, second: 0, millisecond: 0});
+		else if(['shortDateTime'].indexOf(format) !== -1)
+			result.set({second: 0, millisecond: 0});
+
+		return result.toDate();
 	}
 
-	public valueToDateString(value: any, format: string = 'shortDate'): string {
+	public toDateString(value: any, format = 'shortDate'): string {
 		// No value
 		if( !value )
 			return '';
 
-		return this.valueToMoment( value, format ).locale( this._options.locale ).format( this.format(format) );
+		return this.toMoment(value, format).locale(this._options.locale).format( this.format(format) );
 	}
 
-	public valueToMoment(value: any, format: string = 'shortDate'): moment.Moment {
+	public toMoment(value: any, format = 'shortDate'): moment.Moment {
 
 		// No value
 		if( !value )
@@ -66,36 +73,35 @@ export class I18nService {
 		if( _.isString( value ) ) {
 
 			try {
-				let valueMoment = moment( value, format );
+				let valueMoment = moment(value, format, this._options.locale, true);
 				if( valueMoment.isValid() )
 					return valueMoment;
 
-				valueMoment = moment( value );
+				valueMoment = moment(value, this._options.locale, true);
 				if( valueMoment.isValid() )
 					return valueMoment;
 
 				console.error('Invalid date string format for', {value, format});
-				return moment();
 			} catch(exception) {
-				console.error('Invalid date string format for', {value, exception});
-				return moment();
+				console.error('Invalid date string format for', {value, format, exception});
 			}
 
-		// Instance of moment
-		} else if( value instanceof moment ) {
-			return value;
+			return moment();
 		}
+
+		// Instance of moment
+		if( value instanceof moment )
+			return value;
 
 		// Instance of Date
 		if( value instanceof Date )
-			return moment( value );
+			return moment(value);
 
 		// Date object
-		else if( value === Date )
+		if( value === Date )
 			return moment();
 
 		console.error('Unrecognised date value', value);
-
 		return moment();
 	}
 

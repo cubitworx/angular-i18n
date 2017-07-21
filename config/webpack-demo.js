@@ -4,7 +4,7 @@ var webpackMerge = require('webpack-merge');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var helpers = require('./helpers');
-var webpackCommon = require('./webpack.common.js');
+var webpackCommon = require('./webpack-common.js');
 
 const PACKAGE = JSON.parse( fs.readFileSync('./package.json').toString() );
 const METADATA = {
@@ -14,35 +14,43 @@ const METADATA = {
 	isDevServer: helpers.isWebpackDevServer()
 };
 
+webpackCommon.sourcePath = helpers.root();
+
 module.exports = webpackMerge(
 	webpackCommon.angularWorkaround,
 	webpackCommon.defaultDefinePlugin,
-	webpackCommon.imageLoader,
 	webpackCommon.resolve,
 	webpackCommon.stylesExtracted,
 	webpackCommon.common,
 	{
 
+		context: helpers.root(),
+
 		devtool: 'cheap-module-eval-source-map',
 
-		entry: [
-			'./demo/polyfills.ts', './demo/main.ts'
-		],
+    entry: {
+			'bundles/polyfills': './demo/polyfills.ts',
+			'bundles/demo': './demo/main.ts'
+    },
 
     module: {
 			rules: [
 
+				// demo scss
 				{
-						test: /\.scss$/,
-						use: [ 'css-loader', 'sass-loader' ],
-						include: /demo(\\|\/)main\.scss$/
+					test: /\.scss$/,
+					use: webpackCommon.extractStyles.demo.extract({
+							fallback: 'style-loader',
+							use: [ 'css-loader', 'sass-loader' ]
+					}),
+					include: /demo(\\|\/)main\.scss$/
 				},
 
 			]
 		},
 
 		output: {
-			path: helpers.root('demo'),
+			path: helpers.root('dev'),
 			publicPath: '/',
 			filename: '[name].bundle.js',
 			chunkFilename: '[id].chunk.js'
@@ -50,8 +58,19 @@ module.exports = webpackMerge(
 
 		plugins: [
 
+			new webpack.optimize.CommonsChunkPlugin({
+					name: 'bundles/polyfills',
+					chunks: ['bundles/polyfills']
+			}),
+
+			new webpack.optimize.CommonsChunkPlugin({
+					name: 'bundles/vendor',
+					chunks: ['bundles/demo'],
+					minChunks: module => /node_modules/.test(module.resource)
+			}),
+
 			new HtmlWebpackPlugin({
-				template: 'demo/index.html',
+				template: './demo/index.html',
 				chunksSortMode: 'dependency',
 				metadata: METADATA,
 				inject: 'body'

@@ -3,7 +3,7 @@ import { BrowserModule }  from '@angular/platform-browser';
 
 // Local
 import { AppComponent } from './app.component';
-import { I18nModule } from '../../module';
+import { I18nModule } from '../src';
 
 @NgModule({
 	bootstrap: [ AppComponent ],
@@ -12,7 +12,7 @@ import { I18nModule } from '../../module';
 	],
 	imports: [
 		BrowserModule,
-		I18nModule
+		I18nModule.forRoot()
 	]
 })
 export class AppModule { }
