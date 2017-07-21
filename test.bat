@@ -1,3 +1,3 @@
 @echo off
 cls
-karma start
+npm run test

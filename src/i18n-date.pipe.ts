@@ -9,12 +9,11 @@ import { I18nService }  from './i18n.service';
 export class I18nDatePipe implements PipeTransform {
 
 	constructor(
-		// protected _i18nService: I18nService
+		protected _i18nService: I18nService
 	) { }
 
 	public transform(value: any, format: string): string {
-		return 'test';
-		// return this._i18nService.toDateString(value, format);
+		return this._i18nService.toDateString( value, format );
 	}
 
 }
