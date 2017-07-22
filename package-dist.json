@@ -1,10 +1,10 @@
 {
 	"name": "@cubitworx/angular-i18n",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"license": "MIT",
 	"description": "Internationalization package for Angular",
-	"module": "./src/index.js",
-	"typings": "./src/index.d.ts",
+	"module": "./src",
+	"typings": "./src",
 	"scripts": {},
 	"author": "Charles Louw <charles.louw@gmail.com>",
 	"repository": {

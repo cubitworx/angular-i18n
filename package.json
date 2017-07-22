@@ -1,11 +1,11 @@
 {
   "name": "@cubitworx/angular-i18n",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "description": "Internationalization package for Angular",
-  "main": "./dist",
-  "module": "./dist/module",
-  "typings": "./dist",
+  "main": "./dist/src",
+  "module": "./dist/src",
+  "typings": "./dist/src",
   "scripts": {
     "clean": "rimraf ./dist",
     "copy": "copyfiles ./LICENSE ./README.md ./package-dist.json ./dist && renamer --find package-dist.json --replace package.json ./dist/*",

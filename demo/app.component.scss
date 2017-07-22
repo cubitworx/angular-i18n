@@ -14,10 +14,10 @@ h3 {
 }
 table {
 	border-collapse: collapse;
-}
-td {
-	padding: .5rem 1rem;
-	border: 1px solid #e9ebec;
+	th, td {
+		padding: .5rem 1rem;
+		border: 1px solid #e9ebec;
+	}
 }
 .project-tagline {
 	margin-bottom: 2rem;
@@ -25,9 +25,9 @@ td {
 	opacity: .7;
 }
 .demo {
-  padding: 20px 0;
+	padding: 1rem;
 	margin: 0 auto;
-	max-width: 82rem;
+	max-width: 1200px;
 }
 .btn {
 	display: inline-block;

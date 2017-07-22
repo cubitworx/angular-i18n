@@ -58,15 +58,22 @@ module.exports = webpackMerge(
 
 		plugins: [
 
+			// Explicit polyfills chunk since they don't need to be imported via code
 			new webpack.optimize.CommonsChunkPlugin({
 					name: 'bundles/polyfills',
 					chunks: ['bundles/polyfills']
 			}),
 
+			// Implicit common vendor chunk enables tree shaking of the vendor modules
 			new webpack.optimize.CommonsChunkPlugin({
 					name: 'bundles/vendor',
 					chunks: ['bundles/demo'],
 					minChunks: module => /node_modules/.test(module.resource)
+			}),
+
+			// Specify the correct order the scripts will be injected in
+			new webpack.optimize.CommonsChunkPlugin({
+				names: ['bundles/polyfills', 'bundles/vendor'].reverse()
 			}),
 
 			new HtmlWebpackPlugin({
